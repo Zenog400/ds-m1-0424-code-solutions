@@ -4,7 +4,8 @@ create table customer_seraphima_ruiz (
 	customer_id smallint,
 	name varchar(20),
 	location varchar(20),
-	total_expenditure varchar(20)
+	total_expenditure varchar(20),
+  primary key (customer_id)
 );
 
 insert into customer_seraphima_ruiz
@@ -18,7 +19,7 @@ values
 
 update customer_seraphima_ruiz
 set total_expenditure = 1800
-where total_expenditure = 18000;
+where customer_id = 1716;
 
 alter table customer_seraphima_ruiz
 add gender varchar(20);
