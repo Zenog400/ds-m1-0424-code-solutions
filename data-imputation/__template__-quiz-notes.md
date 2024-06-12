@@ -4,7 +4,8 @@
 
 Answer the following questions in the provided markdown file before turning in this exercise:
 
-- [Question]
+- Why is it important to handle null values in datasets?
+  - Most algorithms aren't designed to handle null values natively
 
 ## Notes
 
