@@ -13,9 +13,11 @@ def discretize_feature(df: pd.DataFrame, feature: str) -> pd.DataFrame:
     Returns:
         pd.DataFrame: The DataFrame with the specified feature discretized to integers.
     """
+    df[feature] = df[feature].round().astype(int)
+    return df
 
     # TODO: Implement this function
-    pass
+    #pass
 
 
 def target_encode(

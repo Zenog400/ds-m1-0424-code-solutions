@@ -26,6 +26,12 @@ def create_interaction_features(
         create_interaction_features(df, feature_pairs)  # Output: DataFrame with 'A_x_B' column
     """
 
+    for pair_tup in feature_pairs:
+        new_col = df[pair_tup[0]]*df[pair_tup[1]]
+        df.insert(len(df.columns), f"{pair_tup[0]}_x_{pair_tup[1]}",new_col)
+    
+    return df
+
     # TODO: Implement this function
 
-    pass
+    #pass
