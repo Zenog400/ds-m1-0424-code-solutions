@@ -35,5 +35,11 @@ def target_encode(
         pd.DataFrame: The DataFrame with specified features target encoded.
     """
 
+    te = TargetEncoder()
+    df[features_to_encode] = df[features_to_encode].astype(str)
+    encoded = te.fit_transform(df[features_to_encode],df[target_col])
+    df[target_col] = encoded
+    return df
+
     # TODO: Implement this function
-    pass
+    #pass

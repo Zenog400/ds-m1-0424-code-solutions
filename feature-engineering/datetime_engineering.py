@@ -13,8 +13,11 @@ def convert_datetime(df: pd.DataFrame, feature: str) -> pd.DataFrame:
         pd.DataFrame: The DataFrame with the specified feature converted to datetime.
     """
 
+    df[feature] = pd.to_datetime(df[feature])
+    return df
+    # ,format="%Y-%m-%d %H:%M:%S"
     # TODO: Implement this function
-    pass
+    #pass
 
 
 def create_month(df: pd.DataFrame, feature: str, name: str) -> pd.DataFrame:
@@ -30,8 +33,10 @@ def create_month(df: pd.DataFrame, feature: str, name: str) -> pd.DataFrame:
         pd.DataFrame: The DataFrame including the "month" feature.
     """
 
+    df[name] = df[feature].apply(lambda x: x.strftime('%B'))
+    return df
     # TODO: Implement this function
-    pass
+    #pass
 
 
 def aggregate_months(df: pd.DataFrame, group: str, agg_func: str) -> pd.DataFrame:
@@ -47,6 +52,8 @@ def aggregate_months(df: pd.DataFrame, group: str, agg_func: str) -> pd.DataFram
         pd.DataFrame: The aggregated dataframe.
     """
 
+    grouped = df.groupby(group).agg(agg_func)
+    return grouped
     # TODO: Implement this function
-    pass
+    #pass
 
