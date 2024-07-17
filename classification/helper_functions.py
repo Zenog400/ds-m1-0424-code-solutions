@@ -1,6 +1,9 @@
-# TODO: Imports go here
+from sklearn.model_selection import GridSearchCV
+from sklearn.ensemble import RandomForestClassifier
+from xgboost import XGBClassifier
+import sklearn.metrics as metrics
 
-def grid_train_random_forest(X, y, params, n_folds, eval_metric):
+def grid_train_random_forest(X, y, params, n_folds = 4, eval_metric = "accuracy"):
     """
     Train Random Forest binary classifier using a grid of hyperparameters. Return
     the best model according to the specified metric.
@@ -18,6 +21,10 @@ def grid_train_random_forest(X, y, params, n_folds, eval_metric):
     Examples:
         model = grid_train_random_forest(X, y, params, 4, "accuracy")
     """
+
+    gsc = GridSearchCV(RandomForestClassifier(), param_grid=params, scoring=eval_metric, n_jobs=n_folds)
+    gsc.fit(X, y)
+    return gsc.best_estimator_
 
     # TODO: Implement this function
     pass
@@ -41,6 +48,12 @@ def calc_roc_metrics(X, y, model):
         fpr, tpr, auc = calc_roc_metrics(X, y, model)
     """
 
+    
+    fpr, tpr, thresholds = metrics.roc_curve(y, model.predict_proba(X)[:, 1], pos_label="Yes")
+
+    auc = metrics.roc_auc_score(y, model.predict_proba(X)[:, 1])
+    return fpr, tpr, auc
+
     # TODO: Implement this function
     pass
 
@@ -63,5 +76,10 @@ def train_xgboost(X_train, y_train, X_test, y_test, params, n_round):
         model = calc_roc_metrics(X_train, y_train, X_test, y_test, params)
     """
 
+    y_train = y_train.apply(lambda foo: 0 if foo == "No" else 1)
+    y_test = y_test.apply(lambda foo: 0 if foo == "No" else 1)
+    xgboosted = XGBClassifier(max_depth = params['max_depth'], learning_rate = params['eta'], objective = params['objective'], n_jobs = params['nthread'], eval_metric = params['eval_metric'], n_estimators = n_round)
+    xgboosted.fit(X_train, y_train, eval_set=[(X_test, y_test)])
+    return xgboosted
     # TODO: Implement this function
     pass
