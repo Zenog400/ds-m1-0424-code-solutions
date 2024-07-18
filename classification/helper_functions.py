@@ -22,12 +22,10 @@ def grid_train_random_forest(X, y, params, n_folds = 4, eval_metric = "accuracy"
         model = grid_train_random_forest(X, y, params, 4, "accuracy")
     """
 
-    gsc = GridSearchCV(RandomForestClassifier(), param_grid=params, scoring=eval_metric, n_jobs=n_folds)
+    gsc = GridSearchCV(RandomForestClassifier(), param_grid=params, scoring=eval_metric, cv=n_folds)
     gsc.fit(X, y)
     return gsc.best_estimator_
 
-    # TODO: Implement this function
-    pass
 
 def calc_roc_metrics(X, y, model):
     """
@@ -54,8 +52,7 @@ def calc_roc_metrics(X, y, model):
     auc = metrics.roc_auc_score(y, model.predict_proba(X)[:, 1])
     return fpr, tpr, auc
 
-    # TODO: Implement this function
-    pass
+
 
 def train_xgboost(X_train, y_train, X_test, y_test, params, n_round):
     """
@@ -81,5 +78,4 @@ def train_xgboost(X_train, y_train, X_test, y_test, params, n_round):
     xgboosted = XGBClassifier(max_depth = params['max_depth'], learning_rate = params['eta'], objective = params['objective'], n_jobs = params['nthread'], eval_metric = params['eval_metric'], n_estimators = n_round)
     xgboosted.fit(X_train, y_train, eval_set=[(X_test, y_test)])
     return xgboosted
-    # TODO: Implement this function
-    pass
+
